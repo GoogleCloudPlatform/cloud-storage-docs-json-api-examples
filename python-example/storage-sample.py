@@ -38,7 +38,7 @@ from oauth2client import tools
 
 # Define sample variables.
 _BUCKET_NAME = '[[INSERT_YOUR_BUCKET_NAME_HERE]]'
-_API_VERSION = 'v1beta2'
+_API_VERSION = 'v1'
 
 # Parser for command-line arguments.
 parser = argparse.ArgumentParser(
