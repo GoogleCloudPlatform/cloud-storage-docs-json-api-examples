@@ -91,7 +91,7 @@ def main(argv):
     resp = req.execute()
     print json.dumps(resp, indent=2)
 
-    fields_to_return = 'nextPageToken,items(bucket,name,metadata(my-key))'
+    fields_to_return = 'nextPageToken,items(name,size,contentType,metadata(my-key))'
     req = service.objects().list(bucket=_BUCKET_NAME, fields=fields_to_return)
     # If you have too many items to list in one request, list_next() will
     # automatically handle paging with the pageToken.
