@@ -1,4 +1,4 @@
-Java Samples
+Python Samples
 ============
 
 Two samples:
