@@ -7,4 +7,4 @@ Two samples:
 - componse-sample.py - composes two objects together to create another.
 
 For more information details about running these samples, including how to create the client_secrets.json file, see
-https://developers.google.com/storage/docs/json_api/v1/json-api-java-samples.
+https://developers.google.com/storage/docs/json_api/v1/json-api-python-samples.
