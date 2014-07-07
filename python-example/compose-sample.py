@@ -53,13 +53,13 @@ parser = argparse.ArgumentParser(
 # CLIENT_SECRETS is name of a file containing the OAuth 2.0 information for this
 # application, including client_id and client_secret. You can see the Client ID
 # and Client secret on the APIs page in the Cloud Console:
-# <https://cloud.google.com/console#/project/673076789876/apiui>
+# <https://console.developers.google.com/>
 CLIENT_SECRETS = os.path.join(os.path.dirname(__file__), 'client_secrets.json')
 
 # Set up a Flow object to be used for authentication.
 # Add one or more of the following scopes. PLEASE ONLY ADD THE SCOPES YOU
 # NEED. For more information on using scopes please see
-# <https://developers.google.com/+/best-practices>.
+# <https://developers.google.com/storage/docs/authentication#oauth>.
 FLOW = client.flow_from_clientsecrets(CLIENT_SECRETS,
   scope=[
       'https://www.googleapis.com/auth/devstorage.full_control',
