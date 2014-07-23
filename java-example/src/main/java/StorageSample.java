@@ -132,12 +132,17 @@ public class StorageSample {
       com.google.api.services.storage.model.Objects objects;
       do {
         objects = listObjects.execute();
-        for (StorageObject object : objects.getItems()) {
+        List<StorageObject> items = objects.getItems();
+        if (null == items) {
+          System.out.println("There were no objects in the given bucket; try adding some and re-running.");
+          break;
+        }
+        for (StorageObject object : items) {
           System.out.println(object.getName() + " (" + object.getSize() + " bytes)");
         }
         listObjects.setPageToken(objects.getNextPageToken());
       } while (null != objects.getNextPageToken());
-      
+
     } catch (IOException e) {
       System.err.println(e.getMessage());
     } catch (Throwable t) {
