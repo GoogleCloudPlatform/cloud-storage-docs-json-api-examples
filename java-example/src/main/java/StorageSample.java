@@ -15,6 +15,7 @@
 
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp;
+import com.google.api.client.googleapis.extensions.java6.auth.oauth2.GooglePromptReceiver;
 import com.google.api.client.extensions.jetty.auth.oauth2.LocalServerReceiver;
 import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
 import com.google.api.client.googleapis.auth.oauth2.GoogleClientSecrets;
@@ -47,6 +48,7 @@ public class StorageSample {
    */
   private static final String APPLICATION_NAME = "[[INSERT_YOUR_APP_NAME_HERE]]";
   private static final String BUCKET_NAME = "[[INSERT_YOUR_BUCKET_NAME_HERE]]";
+  private static final Boolean AUTH_LOCAL_WEBSERVER = false;
 
   /** Directory to store user credentials. */
   private static final java.io.File DATA_STORE_DIR =
@@ -101,7 +103,11 @@ public class StorageSample {
         .setDataStoreFactory(dataStoreFactory)
         .build();
     // Authorize.
-    return new AuthorizationCodeInstalledApp(flow, new LocalServerReceiver()).authorize("user");
+    if (AUTH_LOCAL_WEBSERVER) {
+      return new AuthorizationCodeInstalledApp(flow, new LocalServerReceiver()).authorize("user");
+    } else {
+      return new AuthorizationCodeInstalledApp(flow, new GooglePromptReceiver()).authorize("user");    	
+    }
   }
 
   public static void main(String[] args) {
