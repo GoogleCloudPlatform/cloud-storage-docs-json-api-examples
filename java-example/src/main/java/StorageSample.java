@@ -102,12 +102,12 @@ public class StorageSample {
     scopes.add(StorageScopes.DEVSTORAGE_READ_WRITE);
 
     GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(
-      httpTransport, JSON_FACTORY, clientSecrets, scopes)
-      .setDataStoreFactory(dataStoreFactory)
-      .build();
+        httpTransport, JSON_FACTORY, clientSecrets, scopes)
+        .setDataStoreFactory(dataStoreFactory)
+        .build();
     // Authorize.
     VerificationCodeReceiver receiver = 
-      AUTH_LOCAL_WEBSERVER ? new LocalServerReceiver() : new GooglePromptReceiver();
+        AUTH_LOCAL_WEBSERVER ? new LocalServerReceiver() : new GooglePromptReceiver();
     return new AuthorizationCodeInstalledApp(flow, receiver).authorize("user");    
   }
 
