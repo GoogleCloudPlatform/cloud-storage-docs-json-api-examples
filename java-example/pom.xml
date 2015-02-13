@@ -41,10 +41,16 @@
       <artifactId>google-oauth-client-jetty</artifactId>
       <version>${project.oauth.version}</version>
     </dependency>
+    <dependency>
+      <groupId>com.google.api-client</groupId>
+      <artifactId>google-api-client-java6</artifactId>
+      <version>${project.java6.version}</version>
+    </dependency>
   </dependencies>
   <properties>
     <project.http.version>1.19.0</project.http.version>
     <project.oauth.version>1.19.0</project.oauth.version>
+    <project.java6.version>1.19.0</project.java6.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
 </project>

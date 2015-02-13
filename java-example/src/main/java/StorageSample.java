@@ -15,6 +15,8 @@
 
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp;
+import com.google.api.client.extensions.java6.auth.oauth2.VerificationCodeReceiver;
+import com.google.api.client.googleapis.extensions.java6.auth.oauth2.GooglePromptReceiver;
 import com.google.api.client.extensions.jetty.auth.oauth2.LocalServerReceiver;
 import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
 import com.google.api.client.googleapis.auth.oauth2.GoogleClientSecrets;
@@ -44,9 +46,12 @@ public class StorageSample {
   /**
    * Be sure to specify the name of your application. If the application name is {@code null} or
    * blank, the application will log a warning. Suggested format is "MyCompany-ProductName/1.0".
+   * If you are running the sample on a machine where you have access to a browser, set 
+   * AUTH_LOCAL_WEBSERVER to true.
    */
   private static final String APPLICATION_NAME = "[[INSERT_YOUR_APP_NAME_HERE]]";
   private static final String BUCKET_NAME = "[[INSERT_YOUR_BUCKET_NAME_HERE]]";
+  private static final boolean AUTH_LOCAL_WEBSERVER = false;
 
   /** Directory to store user credentials. */
   private static final java.io.File DATA_STORE_DIR =
@@ -69,20 +74,20 @@ public class StorageSample {
   /** Authorizes the installed application to access user's protected data. */
   private static Credential authorize() throws Exception {
     // Load client secrets.
-        GoogleClientSecrets clientSecrets = null;
-        try {
-        clientSecrets = GoogleClientSecrets.load(JSON_FACTORY,
-            new InputStreamReader(StorageSample.class.getResourceAsStream("/client_secrets.json")));
-        if (clientSecrets.getDetails().getClientId() == null ||
-                clientSecrets.getDetails().getClientSecret() == null) {
-                throw new Exception("client_secrets not well formed.");
-        }
-        } catch (Exception e) {
-                System.out.println("Problem loading client_secrets.json file. Make sure it exists, you are " + 
-                                   "loading it with the right path, and a client ID and client secret are " +
-                                   "defined in it.\n" + e.getMessage());
-                System.exit(1);
-        }
+    GoogleClientSecrets clientSecrets = null;
+    try {
+      clientSecrets = GoogleClientSecrets.load(JSON_FACTORY,
+          new InputStreamReader(StorageSample.class.getResourceAsStream("/client_secrets.json")));
+      if (clientSecrets.getDetails().getClientId() == null ||
+          clientSecrets.getDetails().getClientSecret() == null) {
+          throw new Exception("client_secrets not well formed.");
+      }
+    } catch (Exception e) {
+      System.out.println("Problem loading client_secrets.json file. Make sure it exists, you are " + 
+                        "loading it with the right path, and a client ID and client secret are " +
+                        "defined in it.\n" + e.getMessage());
+      System.exit(1);
+    }
 
     // Set up authorization code flow.
     // Ask for only the permissions you need. Asking for more permissions will
@@ -101,7 +106,9 @@ public class StorageSample {
         .setDataStoreFactory(dataStoreFactory)
         .build();
     // Authorize.
-    return new AuthorizationCodeInstalledApp(flow, new LocalServerReceiver()).authorize("user");
+    VerificationCodeReceiver receiver = 
+        AUTH_LOCAL_WEBSERVER ? new LocalServerReceiver() : new GooglePromptReceiver();
+    return new AuthorizationCodeInstalledApp(flow, receiver).authorize("user");    
   }
 
   public static void main(String[] args) {
