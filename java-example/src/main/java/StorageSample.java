@@ -74,20 +74,20 @@ public class StorageSample {
   /** Authorizes the installed application to access user's protected data. */
   private static Credential authorize() throws Exception {
     // Load client secrets.
-        GoogleClientSecrets clientSecrets = null;
-        try {
-        clientSecrets = GoogleClientSecrets.load(JSON_FACTORY,
-            new InputStreamReader(StorageSample.class.getResourceAsStream("/client_secrets.json")));
-        if (clientSecrets.getDetails().getClientId() == null ||
-                clientSecrets.getDetails().getClientSecret() == null) {
-                throw new Exception("client_secrets not well formed.");
-        }
-        } catch (Exception e) {
-                System.out.println("Problem loading client_secrets.json file. Make sure it exists, you are " + 
-                                   "loading it with the right path, and a client ID and client secret are " +
-                                   "defined in it.\n" + e.getMessage());
-                System.exit(1);
-        }
+    GoogleClientSecrets clientSecrets = null;
+    try {
+      clientSecrets = GoogleClientSecrets.load(JSON_FACTORY,
+          new InputStreamReader(StorageSample.class.getResourceAsStream("/client_secrets.json")));
+      if (clientSecrets.getDetails().getClientId() == null ||
+          clientSecrets.getDetails().getClientSecret() == null) {
+          throw new Exception("client_secrets not well formed.");
+      }
+    } catch (Exception e) {
+      System.out.println("Problem loading client_secrets.json file. Make sure it exists, you are " + 
+                        "loading it with the right path, and a client ID and client secret are " +
+                        "defined in it.\n" + e.getMessage());
+      System.exit(1);
+    }
 
     // Set up authorization code flow.
     // Ask for only the permissions you need. Asking for more permissions will
@@ -102,11 +102,12 @@ public class StorageSample {
     scopes.add(StorageScopes.DEVSTORAGE_READ_WRITE);
 
     GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(
-        httpTransport, JSON_FACTORY, clientSecrets, scopes)
-        .setDataStoreFactory(dataStoreFactory)
-        .build();
+      httpTransport, JSON_FACTORY, clientSecrets, scopes)
+      .setDataStoreFactory(dataStoreFactory)
+      .build();
     // Authorize.
-    VerificationCodeReceiver receiver = AUTH_LOCAL_WEBSERVER ? new LocalServerReceiver() : new GooglePromptReceiver();
+    VerificationCodeReceiver receiver = 
+      AUTH_LOCAL_WEBSERVER ? new LocalServerReceiver() : new GooglePromptReceiver();
     return new AuthorizationCodeInstalledApp(flow, receiver).authorize("user");    
   }
 
