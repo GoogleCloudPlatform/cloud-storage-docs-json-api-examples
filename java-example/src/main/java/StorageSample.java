@@ -51,6 +51,7 @@ public class StorageSample {
    */
   private static final String APPLICATION_NAME = "[[INSERT_YOUR_APP_NAME_HERE]]";
   private static final String BUCKET_NAME = "[[INSERT_YOUR_BUCKET_NAME_HERE]]";
+  private static final String CLIENT_SECRET_FILENAME = "[[INSERT_YOUR_CLIENT_SECRET_FILENAME_HERE]]";
   private static final boolean AUTH_LOCAL_WEBSERVER = false;
 
   /** Directory to store user credentials. */
@@ -77,7 +78,7 @@ public class StorageSample {
     GoogleClientSecrets clientSecrets = null;
     try {
       clientSecrets = GoogleClientSecrets.load(JSON_FACTORY,
-          new InputStreamReader(StorageSample.class.getResourceAsStream("/client_secrets.json")));
+          new InputStreamReader(StorageSample.class.getResourceAsStream(String.format("/%s",CLIENT_SECRET_FILENAME))));
       if (clientSecrets.getDetails().getClientId() == null ||
           clientSecrets.getDetails().getClientSecret() == null) {
           throw new Exception("client_secrets not well formed.");
