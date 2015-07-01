@@ -1,3 +1,6 @@
-# These samples have moved.
+![status: inactive](https://img.shields.io/badge/status-inactive-red.svg)
 
-These samples are now located at https://github.com/GoogleCloudPlatform/python-docs-samples/tree/master/storage.
+This project is no longer actively developed or maintained.  
+
+For new work on this check out [storage samples in GoogleCloudPlatform/python-docs-samples](https://github.com/GoogleCloudPlatform/python-docs-samples/tree/master/storage)
+
